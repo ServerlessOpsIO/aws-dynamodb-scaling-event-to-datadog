@@ -1,0 +1,56 @@
+# Send ASG events to Datadog
+service: dynamodb-scaling-event-to-datadog
+
+plugins:
+  - serverless-python-requirements
+  - serverless-cloudformation-parameter-setter
+  - serverless-sam
+
+custom:
+  stage: "${opt:stage, env:SLS_STAGE, 'dev'}"
+  profile: "${opt:aws-profile, env:AWS_PROFILE, env:AWS_DEFAULT_PROFILE, 'default'}"
+  log_level: "${env:LOG_LEVEL, 'INFO'}"
+
+  cf-parameters:
+    DatadogApiKey: "${env:DATADOG_API_KEY, ''}"
+    DatadogAppKey: "${env:DATADOG_APP_KEY, ''}"
+
+  pythonRequirements:
+    dockerizePip: true
+
+provider:
+  name: aws
+  profile: ${self:custom.profile}
+  stage: ${self:custom.stage}
+  runtime: python3.6
+  environment:
+    LOG_LEVEL: ${self:custom.log_level}
+
+functions:
+  WriteEvent:
+    handler: handlers/write-event-to-datadog.handler
+    description: "Write autoscaling events to Datadog"
+    memorySize: 128
+    timeout: 30
+    environment:
+      DATADOG_API_KEY:
+        Ref: DatadogApiKey
+      DATADOG_APP_KEY:
+        Ref: DatadogAppKey
+    events:
+      - cloudwatchEvent:
+          event:
+            source:
+              - "aws.dynamodb"
+
+resources:
+  Parameters:
+    DatadogApiKey:
+      Type: String
+      Description: "Datadog API key"
+      NoEcho: true
+    DatadogAppKey:
+      Type: String
+      Description: "Datadog App key"
+      NoEcho: true
+
