@@ -7,3 +7,8 @@ Send DynamoDB scaling events to Datadog.
 
 DynamoDB scaling events can be used with system metrics to pinpoint issues caused by the scaling of a service.
 
+Requires the following configuration from Datadog.
+
+* DatadogApiKey
+* DatadogAppKey
+
