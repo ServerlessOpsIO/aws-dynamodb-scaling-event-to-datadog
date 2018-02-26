@@ -75,8 +75,8 @@ def _get_event_text(dynamodb_table: str, region: str, rcu_resize: tuple, wcu_res
 
 def _get_resize(event_detail: dict, unit_type: str) -> tuple:
     '''Return the change in RCUs'''
-    current = event_detail.get('requestParameters').get('provisionedThroughput').get(unit_type)
-    new = event_detail.get('responseElements').get('tableDescription').get('provisionedThroughput').get(unit_type)
+    current = event_detail.get('responseElements').get('tableDescription').get('provisionedThroughput').get(unit_type)
+    new = event_detail.get('requestParameters').get('provisionedThroughput').get(unit_type)
 
     return (current, new)
 
