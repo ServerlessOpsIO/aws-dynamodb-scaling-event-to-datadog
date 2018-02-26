@@ -59,16 +59,16 @@ def _get_event_text(dynamodb_table: str, region: str, rcu_resize: tuple, wcu_res
     if rcu_resize[0] == rcu_resize[1]:
         rcu = 'Unchanced : {}'.format(rcu_resize[0])
     elif rcu_resize[0] < rcu_resize[1]:
-        rcu = 'Up: {}'.format(' -> '.join(rcu_resize))
+        rcu = 'Up: {} -> {}'.format(rcu_resize[0], rcu_resize[1])
     elif rcu_resize[0] > rcu_resize[1]:
-        rcu = 'Down: {}'.format(' -> '.join(rcu_resize))
+        rcu = 'Down: {} -> {}'.format(rcu_resize[0], rcu_resize[1])
 
     if wcu_resize[0] == wcu_resize[1]:
         wcu = 'Unchanced : {}'.format(wcu_resize[0])
     elif wcu_resize[0] < wcu_resize[1]:
-        wcu = 'Up: {}'.format(' -> '.join(wcu_resize))
+        wcu = 'Up: {} -> {}'.format(wcu_resize[0], wcu_resize[1])
     elif wcu_resize[0] > wcu_resize[1]:
-        wcu = 'Down: {}'.format(' -> '.join(wcu_resize))
+        wcu = 'Down: {} -> {}'.format(wcu_resize[0], wcu_resize[1])
 
     return msg.format(ddt=dynamodb_table, region=region, rcu=rcu, wcu=wcu)
 
