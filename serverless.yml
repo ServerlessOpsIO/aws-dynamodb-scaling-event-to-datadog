@@ -42,6 +42,9 @@ functions:
           event:
             source:
               - "aws.dynamodb"
+            detail:
+              userAgent:
+                - "dynamodb.application-autoscaling.amazonaws.com"
 
 resources:
   Parameters:
