@@ -48,8 +48,7 @@ def _create_datadog_event(event: dict) -> dict:
 
 def _get_event_text(dynamodb_table: str, region: str, rcu_resize: tuple, wcu_resize: tuple) -> str:
     '''Return a formatted event message'''
-    msg = '''
-    DynamoDB Table {ddt}
+    msg = '''DynamoDB Table {ddt}
     Region: {region}
 
     RCU: {rcu}
@@ -57,18 +56,18 @@ def _get_event_text(dynamodb_table: str, region: str, rcu_resize: tuple, wcu_res
     '''
 
     if rcu_resize[0] == rcu_resize[1]:
-        rcu = 'Unchanced : {}'.format(rcu_resize[0])
+        rcu = 'Unchanged {}'.format(rcu_resize[0])
     elif rcu_resize[0] < rcu_resize[1]:
-        rcu = 'Up: {} -> {}'.format(rcu_resize[0], rcu_resize[1])
+        rcu = 'Up {} -> {}'.format(rcu_resize[0], rcu_resize[1])
     elif rcu_resize[0] > rcu_resize[1]:
-        rcu = 'Down: {} -> {}'.format(rcu_resize[0], rcu_resize[1])
+        rcu = 'Down {} -> {}'.format(rcu_resize[0], rcu_resize[1])
 
     if wcu_resize[0] == wcu_resize[1]:
-        wcu = 'Unchanced : {}'.format(wcu_resize[0])
+        wcu = 'Unchanged {}'.format(wcu_resize[0])
     elif wcu_resize[0] < wcu_resize[1]:
-        wcu = 'Up: {} -> {}'.format(wcu_resize[0], wcu_resize[1])
+        wcu = 'Up {} -> {}'.format(wcu_resize[0], wcu_resize[1])
     elif wcu_resize[0] > wcu_resize[1]:
-        wcu = 'Down: {} -> {}'.format(wcu_resize[0], wcu_resize[1])
+        wcu = 'Down {} -> {}'.format(wcu_resize[0], wcu_resize[1])
 
     return msg.format(ddt=dynamodb_table, region=region, rcu=rcu, wcu=wcu)
 
