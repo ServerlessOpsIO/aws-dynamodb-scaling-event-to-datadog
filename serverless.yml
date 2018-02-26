@@ -1,5 +1,5 @@
 # Send ASG events to Datadog
-service: dynamodb-scaling-event-to-datadog
+service: aws-dynamodb-scaling-event-to-datadog
 
 plugins:
   - serverless-python-requirements
